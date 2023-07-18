@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    justify-content: center;
+}
+
+.container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.board {
+    display: grid;
+    width: 150px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.box {
+    border: 1px solid black;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    font-size: 40px;
+}
