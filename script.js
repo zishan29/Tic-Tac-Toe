@@ -1,4 +1,7 @@
+const playerScoreX = document.querySelector('#player-x');
+const playerScoreO = document.querySelector('#player-o');
 let prev = 'O';
+let moves = 1;
 
 let gameBoard = (() => {
     let board = [[, , ], [, , ], [, , ]];
@@ -60,90 +63,111 @@ function checkWinner() {
         return 'O'
 }
 
+function checkTie() {
+    return moves++;
+}
+
 function gameStart() {
+    const winner = document.querySelectorAll('.winner');
+    const win = document.querySelector('#win');
+    const container = document.querySelector('.container');
     const $box = document.querySelectorAll('.box');
     $box.forEach((box) => {
         box.addEventListener('click', (e) => {
-            if(prev === 'X') {
-                if(e.target.classList.contains('row0')) {
-                    if(e.target.id === 'column0'){
-                        gameBoard.board[0][0] = -1;
-                    } else if(e.target.id === 'column1') {
-                        gameBoard.board[0][1] = -1;
-                    } else {
-                        gameBoard.board[0][2] = -1;
-                    }
-                }
-                if(e.target.classList.contains('row1')) {
-                    if(e.target.id === 'column0'){
-                        gameBoard.board[1][0] = -1;
-                    } else if(e.target.id === 'column1') {
-                        gameBoard.board[1][1] = -1;
-                    } else {
-                        gameBoard.board[1][2] = -1;
-                    }
-                }
-                if(e.target.classList.contains('row2')) {
-                    if(e.target.id === 'column0'){
-                        gameBoard.board[2][0] = -1;
-                    } else if(e.target.id === 'column1') {
-                        gameBoard.board[2][1] = -1;
-                    } else {
-                        gameBoard.board[2][2] = -1;
-                    }
-                }
-                prev = 'O';
-                displayBoard();
-                gameStart();
-                if(checkWinner() === 'O') {
-                    const winner = document.querySelectorAll('.winner');
-                    const win = document.querySelector('#win');
-                    const container = document.querySelector('.container');
-                    winner.forEach(winner => winner.classList.add('visible'));
-                    win.textContent = 'O'
-                    container.classList.add('blur');
-                }
+            if(e.target.textContent === 'X' || e.target.textContent === 'O') {
+                return;
             } else {
-                if(e.target.classList.contains('row0')) {
-                    if(e.target.id === 'column0'){
-                        gameBoard.board[0][0] = 1;
-                    } else if(e.target.id === 'column1') {
-                        gameBoard.board[0][1] = 1;
-                    } else {
-                        gameBoard.board[0][2] = 1;
+                if(prev === 'X') {
+                    if(e.target.classList.contains('row0')) {
+                        if(e.target.id === 'column0'){
+                            gameBoard.board[0][0] = -1;
+                        } else if(e.target.id === 'column1') {
+                            gameBoard.board[0][1] = -1;
+                        } else {
+                            gameBoard.board[0][2] = -1;
+                        }
                     }
-                }
-                if(e.target.classList.contains('row1')) {
-                    if(e.target.id === 'column0'){
-                        gameBoard.board[1][0] = 1;
-                    } else if(e.target.id === 'column1') {
-                        gameBoard.board[1][1] = 1;
-                    } else {
-                        gameBoard.board[1][2] = 1;
+                    if(e.target.classList.contains('row1')) {
+                        if(e.target.id === 'column0'){
+                            gameBoard.board[1][0] = -1;
+                        } else if(e.target.id === 'column1') {
+                            gameBoard.board[1][1] = -1;
+                        } else {
+                            gameBoard.board[1][2] = -1;
+                        }
                     }
-                }
-                if(e.target.classList.contains('row2')) {
-                    if(e.target.id === 'column0'){
-                        gameBoard.board[2][0] = 1;
-                    } else if(e.target.id === 'column1') {
-                        gameBoard.board[2][1] = 1;
-                    } else {
-                        gameBoard.board[2][2] = 1;
+                    if(e.target.classList.contains('row2')) {
+                        if(e.target.id === 'column0'){
+                            gameBoard.board[2][0] = -1;
+                        } else if(e.target.id === 'column1') {
+                            gameBoard.board[2][1] = -1;
+                        } else {
+                            gameBoard.board[2][2] = -1;
+                        }
                     }
-                }
-                prev = 'X';
-                displayBoard();
-                gameStart();
-                if(checkWinner() === 'X') {
-                    const winner = document.querySelectorAll('.winner');
-                    const win = document.querySelector('#win');
-                    const container = document.querySelector('.container');
-                    winner.forEach(winner => winner.classList.add('visible'));
-                    win.textContent = 'X';
-                    container.classList.add('blur');
+                    prev = 'O';
+                    displayBoard();
+                    gameStart();
+                    if(checkWinner() === 'O') {
+                        winner.forEach(winner => winner.classList.add('visible'));
+                        win.textContent = 'O'
+                        playerScoreO.textContent = parseInt(playerScoreO.textContent) + 1;
+                        container.classList.add('blur');
+                    }
+                    if(checkTie() === 9) {
+                        const tie = document.querySelector('#tie');
+                        winner.forEach(winner => winner.classList.add('visible'));
+                        tie.textContent = "It's a Tie"
+                        win.textContent = ''
+                        container.classList.add('blur');
+                    }
+                } else {
+                    if(e.target.classList.contains('row0')) {
+                        if(e.target.id === 'column0'){
+                            gameBoard.board[0][0] = 1;
+                        } else if(e.target.id === 'column1') {
+                            gameBoard.board[0][1] = 1;
+                        } else {
+                            gameBoard.board[0][2] = 1;
+                        }
+                    }
+                    if(e.target.classList.contains('row1')) {
+                        if(e.target.id === 'column0'){
+                            gameBoard.board[1][0] = 1;
+                        } else if(e.target.id === 'column1') {
+                            gameBoard.board[1][1] = 1;
+                        } else {
+                            gameBoard.board[1][2] = 1;
+                        }
+                    }
+                    if(e.target.classList.contains('row2')) {
+                        if(e.target.id === 'column0'){
+                            gameBoard.board[2][0] = 1;
+                        } else if(e.target.id === 'column1') {
+                            gameBoard.board[2][1] = 1;
+                        } else {
+                            gameBoard.board[2][2] = 1;
+                        }
+                    }
+                    prev = 'X';
+                    displayBoard();
+                    gameStart();
+                    if(checkWinner() === 'X') {
+                        winner.forEach(winner => winner.classList.add('visible'));
+                        win.textContent = 'X';
+                        container.classList.add('blur');
+                        playerScoreX.textContent = parseInt(playerScoreX.textContent) + 1;
+                    }
+                    if(checkTie() === 9) {
+                        const tie = document.querySelector('#tie');
+                        winner.forEach(winner => winner.classList.add('visible'));
+                        tie.textContent = "It's a Tie"
+                        win.textContent = ''
+                        container.classList.add('blur');
+                    }
                 }
             }
-        }, {once: true});
+        });
     });
 }
 
@@ -152,6 +176,21 @@ function resetGame() {
     displayBoard();
     prev = 'O';
     gameStart();
+
+}
+
+function resetScreen() {
+    gameBoard.board = [['', '', ''], ['', '', ''], ['', '', '']];
+    displayBoard();
+    prev = 'O';
+    gameStart();
+    playerScoreO.textContent = 0;
+    playerScoreX.textContent = 0;
+}
+
+function resetScore() {
+    playerScoreO.textContent = 0;
+    playerScoreX.textContent = 0;
 }
 
 displayBoard();
@@ -159,8 +198,8 @@ gameStart();
 
 
 const restart = document.querySelector("#restart");
-restart.addEventListener('click', resetGame);
 const playerChoice = document.querySelector("#player-choice");
+restart.addEventListener('click', resetScreen);
 playerChoice.addEventListener('click', () => {
     const player2 = document.querySelector('#player2');
     if(playerChoice.textContent === '1 PLAYER') {
@@ -181,4 +220,5 @@ close.addEventListener('click', () => {
     const container = document.querySelector('.container');
     winner.forEach(winner => winner.classList.remove('visible'));
     container.classList.remove('blur');
+    moves = 1;
 })
