@@ -1,5 +1,7 @@
 const playerScoreX = document.querySelector('#player-x');
 const playerScoreO = document.querySelector('#player-o');
+const restart = document.querySelector("#restart");
+const close = document.querySelector('#close');
 let prev = 'O';
 let moves = 1;
 
@@ -193,27 +195,6 @@ function resetScore() {
     playerScoreX.textContent = 0;
 }
 
-displayBoard();
-gameStart();
-
-
-const restart = document.querySelector("#restart");
-const playerChoice = document.querySelector("#player-choice");
-restart.addEventListener('click', resetScreen);
-playerChoice.addEventListener('click', () => {
-    const player2 = document.querySelector('#player2');
-    if(playerChoice.textContent === '1 PLAYER') {
-        playerChoice.textContent = '2 PLAYERS';
-        player2.textContent = 'COMPUTER(O)';
-        resetGame();
-    } else {
-        playerChoice.textContent = '1 PLAYER';
-        player2.textContent = 'PLAYER(O)';
-        resetGame();
-    }
-});
-
-const close = document.querySelector('#close')
 close.addEventListener('click', () => {
     resetGame();
     const winner = document.querySelectorAll('.winner');
@@ -221,4 +202,10 @@ close.addEventListener('click', () => {
     winner.forEach(winner => winner.classList.remove('visible'));
     container.classList.remove('blur');
     moves = 1;
-})
+});
+
+restart.addEventListener('click', resetScreen);
+
+displayBoard();
+gameStart();
+

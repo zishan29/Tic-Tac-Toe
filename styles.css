@@ -88,7 +88,7 @@ header {
 .info {
     margin-top: 40px;
     display: grid;
-    grid-template-columns:  repeat(3, 150px);
+    grid-template-columns:  repeat(2, 150px);
     grid-template-rows: repeat(2, 30px) 80px;
     justify-content: center;
     align-items: center;
